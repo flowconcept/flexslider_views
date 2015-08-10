@@ -1,0 +1,9 @@
+{
+    "name": "flowconcept/flexslider_views",
+    "minimum-stability": "dev",
+    "type": "drupal-module",
+    "soure": {
+        "url": "git@github:flowconcept/flexslider_views.git",
+        "type": "git"
+    }
+}
