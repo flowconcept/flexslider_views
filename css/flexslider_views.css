@@ -1,0 +1,9 @@
+.flex-slider ul.flexslides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.flex-slider {
+  position: relative;
+}

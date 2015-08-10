@@ -54,8 +54,8 @@ function template_preprocess_views_view_flexslider(&$variables) {
   }
   $variables['attributes']['data-flexsliderconfig'] = Json::encode($variables['settings']);
 
-  $variables['#attached']['library'][] = 'flexslider/flexslider';
-  $variables['#attached']['library'][] = 'flexslider/flexslider_views';
+  # $variables['#attached']['library'][] = 'flexslider_views/flexslider';
+  $variables['#attached']['library'][] = 'flexslider_views/flexslider_views';
 
   template_preprocess_views_view_unformatted($variables);
 }
