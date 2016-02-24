@@ -15,6 +15,10 @@
           var $this = $(this),
             options = $this.data('flexsliderconfig');
 
+          options.init = function (flexslider) {
+            $this.trigger('flexslider-init', flexslider);
+          };
+
           // Register own before handler which invokes a custom event
           options.before = function (flexslider) {
             $this.trigger('flexslider-before', flexslider.animatingTo);
