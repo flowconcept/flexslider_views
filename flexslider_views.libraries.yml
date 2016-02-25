@@ -1,5 +1,5 @@
 flexslider:
-  version: 2.5.0
+  version: 2.6.0
   js:
     /bower_components/flexslider/jquery.flexslider.js: {}
   css:
@@ -7,7 +7,6 @@ flexslider:
       /bower_components/flexslider/flexslider.css: {}
   dependencies:
     - core/jquery
-    - core/drupal
 
 flexslider_views:
   version: VERSION
@@ -17,6 +16,6 @@ flexslider_views:
     theme:
       css/flexslider_views.css: {}
   dependencies:
-    - core/jquery
-    - core/drupal
     - flexslider_views/flexslider
+    - core/jquery.once
+    - core/drupal

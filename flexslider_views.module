@@ -18,33 +18,28 @@ use Drupal\Component\Serialization\Json;
  *   - view: A View object.
  */
 function template_preprocess_views_view_flexslider(&$variables) {
+  /** @var \Drupal\flexslider_views\Plugin\views\style\FlexSlider $handler */
   $handler  = $variables['view']->style_plugin;
 
-  $list_classes = array('flexslides');
-  if (!empty($variables['options']['flex_slider_clearfix'])) {
-    $list_classes[] = "clearfix";
-  }
-
   // Fetch classes from handler options.
+  $list_classes = [];
   if ($handler->options['class']) {
-    $list_classes = array_merge($list_classes, explode(' ', $handler->options['class']));
+    $list_classes = explode(' ', $handler->options['class']);
+    $list_classes = array_map('\Drupal\Component\Utility\Html::cleanCssIdentifier', $list_classes);
   }
-  $list_classes = array_map('\Drupal\Component\Utility\Html::cleanCssIdentifier', $list_classes);
-  // Initialize a new attribute class for $class.
   $variables['list']['attributes'] = new Attribute(array('class' => $list_classes));
 
-
   // Fetch wrapper classes from handler options.
-  $wrapper_classes = array('flex-slider');
+  $wrapper_classes = ['flexslider'];
   if (!empty($handler->options['wrapper_class'])) {
     $wrapper_classes = array_merge($wrapper_classes, explode(' ', $handler->options['wrapper_class']));
+    $wrapper_classes = array_map('\Drupal\Component\Utility\Html::cleanCssIdentifier', $wrapper_classes);
   }
-  #$variables['attributes']['class'] = array_map('\Drupal\Component\Utility\Html::cleanCssIdentifier', $wrapper_classes);
-  $variables['attributes'] = new Attribute(array('class' => array_map('\Drupal\Component\Utility\Html::cleanCssIdentifier', $wrapper_classes)));
+  $variables['attributes'] = new Attribute(array('class' => $wrapper_classes));
 
   $variables['list']['type'] = $handler->options['type'];
 
-  // Flexslider configuration
+  // Flexslider configuration.
   $variables['settings'] = array();
   foreach ($handler->options as $option_name => $option) {
     if (strpos($option_name, 'flexslide_') === 0 && !(is_string($option) && strlen($option) == 0)) {

@@ -4,7 +4,8 @@
 
   Drupal.behaviors.initFlexsliderViews = {
     attach:function (context) {
-      $("div.flex-slider:not(.slider-attached)", context)
+      $('.flexslider', context)
+        .not('.slider-attached')
         .addClass('slider-attached')
         .sort(function (a, b) {
           var a_sort = $(a).data('flexslidersort') || 0,
@@ -15,16 +16,13 @@
           var $this = $(this),
             options = $this.data('flexsliderconfig');
 
+          // Expose events
           options.init = function (flexslider) {
             $this.trigger('flexslider-init', flexslider);
           };
-
-          // Register own before handler which invokes a custom event
           options.before = function (flexslider) {
             $this.trigger('flexslider-before', flexslider.animatingTo);
           };
-
-          // Register own after handler which invokes a custom event
           options.after = function (flexslider) {
             $this.trigger('flexslider-after', flexslider.animatingTo);
           };
@@ -48,7 +46,7 @@
           var $slider = $(this).flexslider(options);
 
           // Pause the slider until the images are load
-          if($lazyImages.length) {
+          if ($lazyImages.length) {
             $slider.flexslider("pause");
             windowLoad(function(){
               $lazyImages.imagesLoaded(function(){
