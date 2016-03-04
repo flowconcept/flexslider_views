@@ -1,9 +1,10 @@
 {
     "name": "flowconcept/flexslider_views",
-    "minimum-stability": "dev",
+    "description": "Views display plugin with flexslider integration.",
     "type": "drupal-module",
-    "soure": {
-        "url": "git@github:flowconcept/flexslider_views.git",
-        "type": "git"
-    }
+    "homepage": "https://github.com/flowconcept/flexslider_views",
+    "support": {
+        "issues": "https://github.com/flowconcept/flexslider_views/issues"
+    },
+    "license": "GPL-2.0+"
 }
