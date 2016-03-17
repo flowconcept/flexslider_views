@@ -7,6 +7,9 @@
 
 use Drupal\Core\Template\Attribute;
 use Drupal\Component\Serialization\Json;
+use Drupal\file\Entity\File;
+use Drupal\image\Entity\ImageStyle;
+
 
 /**
  * Prepares variables for Views HTML list templates.
@@ -19,7 +22,7 @@ use Drupal\Component\Serialization\Json;
  */
 function template_preprocess_views_view_flexslider(&$variables) {
   /** @var \Drupal\flexslider_views\Plugin\views\style\FlexSlider $handler */
-  $handler  = $variables['view']->style_plugin;
+  $handler = $variables['view']->style_plugin;
 
   // Fetch classes from handler options.
   $list_classes = [];
@@ -39,6 +42,11 @@ function template_preprocess_views_view_flexslider(&$variables) {
 
   $variables['list']['type'] = $handler->options['type'];
 
+  if ($handler->options['flexslide_controlNav'] == 'thumbnails' && !empty($handler->options['flexslide_thumbField'])) {
+    $thumbField = $variables['view']->field[$handler->options['flexslide_thumbField']];
+    $thumbImageStyle = $handler->options['flexslide_thumbImageStyle'];
+  }
+
   // Flexslider configuration.
   $variables['settings'] = array();
   foreach ($handler->options as $option_name => $option) {
@@ -52,4 +60,22 @@ function template_preprocess_views_view_flexslider(&$variables) {
   $variables['#attached']['library'][] = 'flexslider_views/flexslider_views';
 
   template_preprocess_views_view_unformatted($variables);
+
+  // Attributes are created in template_preprocess_views_view_unformatted().
+  // Add data-thumb attribute for thumbnail ControlNav.
+  if (isset($thumbField)) {
+    foreach ($variables['rows'] as $id => $row) {
+      $fid = $row['content']['#row']->{$thumbField->aliases[$thumbField->realField]};
+      $file = File::load($fid);
+      $image_uri = $file->getFileUri();
+      // Get image style URL
+      if ($thumbImageStyle) {
+        $image_uri = ImageStyle::load($thumbImageStyle)->buildUrl($image_uri);
+      } else {
+        // Get absolute path for original image
+        $image_uri = $file->url();
+      }
+      $variables['rows'][$id]['attributes']->setAttribute('data-thumb', $image_uri);
+    }
+  }
 }

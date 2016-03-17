@@ -7,7 +7,9 @@
 
 namespace Drupal\flexslider_views\Plugin\views\style;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\entity_test\FieldStorageDefinition;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 
 /**
@@ -65,6 +67,8 @@ class FlexSlider extends StylePluginBase {
     $options['flexslide_randomize']['default'] = FALSE; //Boolean: Randomize slide order
     $options['flexslide_fadeFirstSlide']['default'] = TRUE; //Boolean: Fade in the first slide when animation type is "fade"
     $options['flexslide_thumbCaptions']['default'] = FALSE; //Boolean: Whether or not to put captions on thumbnails when using the "thumbnails" controlNav
+    $options['flexslide_thumbField']['default'] = ''; // Drupal views specific: select field for the "thumbnails" ControlNav.
+    $options['flexslide_thumbImageStyle']['default'] = t('None (original image)');
 
     // Usability features
     $options['flexslide_pauseOnAction']['default'] = TRUE; //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
@@ -112,6 +116,7 @@ class FlexSlider extends StylePluginBase {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
+
 
     $form['type'] = array(
       '#type' => 'value',
@@ -276,6 +281,33 @@ class FlexSlider extends StylePluginBase {
       '#description' => t('Whether or not to put captions on thumbnails when using the "thumbnails" controlNav.'),
     );
 
+    $thumbnail_options = array('' => $this->t('- None -'));
+    foreach ($this->displayHandler->getHandlers('field') as $id => $handler) {
+      if ($label = $handler->label()) {
+        $thumbnail_options[$id] = $label;
+      }
+      else {
+        $thumbnail_options[$id] = $handler->adminLabel();
+      }
+    }
+
+    $form['flexslide_thumbField'] = array(
+      '#type' => 'select',
+      '#options' => $thumbnail_options,
+      '#title' => t('thumbField'),
+      '#default_value' => $this->options['flexslide_thumbField'],
+      '#description' => t('Select image field for "thumbnails" controlNav output.'),
+    );
+
+    $image_styles = image_style_options(FALSE);
+    $form['flexslide_thumbImageStyle'] = array(
+      '#title' => t('Image style'),
+      '#type' => 'select',
+      '#default_value' => $this->options['flexslide_thumbImageStyle'],
+      '#empty_option' => t('None (original image)'),
+      '#options' => $image_styles,
+    );
+
     // Usability features
     $form['usability'] = array(
       '#type' => 'details',
@@ -332,11 +364,11 @@ class FlexSlider extends StylePluginBase {
       '#weight' => 3,
     );
     $form['flexslide_controlNav'] = array(
-      '#type' => 'checkbox',
+      '#type' => 'radios',
       '#title' => t('controlNav'),
       '#default_value' => $this->options['flexslide_controlNav'],
+      '#options' => array('TRUE' => 'true', 'FALSE' => 'false', 'thumbnails' => 'thumbnails'),
       '#description' => t('Create navigation for paging control of each slide? Note: Leave true for manualControls usage.'),
-      '#fieldset' => 'primary',
     );
     $form['flexslide_directionNav'] = array(
       '#type' => 'checkbox',
