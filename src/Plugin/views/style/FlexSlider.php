@@ -418,7 +418,7 @@ class FlexSlider extends StylePluginBase {
       '#type' => 'radios',
       '#title' => t('controlNav'),
       '#default_value' => $this->options['flexslide_controlNav'],
-      '#options' => array('TRUE' => 'true', 'FALSE' => 'false', 'thumbnails' => 'thumbnails'),
+      '#options' => array('1' => 'true', '0' => 'false', 'thumbnails' => 'thumbnails'),
       '#description' => t('Create navigation for paging control of each slide? Note: Leave true for manualControls usage.'),
     );
     $form['flexslide_directionNav'] = array(
