@@ -60,16 +60,18 @@ function template_preprocess_views_view_flexslider(&$variables) {
   if (isset($thumbField)) {
     foreach ($variables['rows'] as $id => $row) {
       $fid = $row['content']['#row']->{$thumbField->aliases[$thumbField->realField]};
-      $file = File::load($fid);
+      if (is_numeric($fid) && $file = File::load($fid)) {
       $image_uri = $file->getFileUri();
-      // Get image style URL
-      if ($thumbImageStyle) {
-        $image_uri = ImageStyle::load($thumbImageStyle)->buildUrl($image_uri);
-      } else {
-        // Get absolute path for original image
-        $image_uri = $file->url();
+        // Get image style URL
+        if ($thumbImageStyle) {
+          $image_uri = ImageStyle::load($thumbImageStyle)->buildUrl($image_uri);
+        }
+        else {
+          // Get absolute path for original image
+          $image_uri = $file->url();
+        }
+        $variables['rows'][$id]['attributes']->setAttribute('data-thumb', $image_uri);
       }
-      $variables['rows'][$id]['attributes']->setAttribute('data-thumb', $image_uri);
     }
   }
 }
