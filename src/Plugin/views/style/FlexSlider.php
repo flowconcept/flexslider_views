@@ -7,9 +7,7 @@
 
 namespace Drupal\flexslider_views\Plugin\views\style;
 
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\entity_test\FieldStorageDefinition;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 
 /**
@@ -19,7 +17,7 @@ use Drupal\views\Plugin\views\style\StylePluginBase;
  *
  * @ViewsStyle(
  *   id = "flexslider",
- *   title = Flexslider,
+ *   title = @Translation("Flexslider"),
  *   help = @Translation("Displays rows as Flexslider slides."),
  *   theme = "views_view_flexslider",
  *   display_types = {"normal"}
