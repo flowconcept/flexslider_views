@@ -1,6 +1,6 @@
 name: Flexslider Views
 type: module
-description: Provides a views display plugin to output a view as flexslider responsive slider.
+description: Provides a views display plugin to output a view as Flexslider responsive slider.
 core: 8.x
 dependencies:
   - views
