@@ -6,5 +6,10 @@
     "support": {
         "issues": "https://github.com/flowconcept/flexslider_views/issues"
     },
-    "license": "GPL-2.0+"
+    "license": "GPL-2.0+",
+    "extra": {
+        "branch-alias": {
+            "dev-8.x-1.x": "8.1.x-dev"
+        }
+    }
 }
