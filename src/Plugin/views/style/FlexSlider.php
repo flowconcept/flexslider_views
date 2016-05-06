@@ -19,8 +19,8 @@ use Drupal\views\Plugin\views\style\StylePluginBase;
  *
  * @ViewsStyle(
  *   id = "flexslider",
- *   title = @Translation("Flexslider"),
- *   help = @Translation("Displays rows as flexslider slides."),
+ *   title = Flexslider,
+ *   help = @Translation("Displays rows as Flexslider slides."),
  *   theme = "views_view_flexslider",
  *   display_types = {"normal"}
  * )
@@ -109,6 +109,57 @@ class FlexSlider extends StylePluginBase {
     $options['flexslide_allowOneSlide']['default'] = TRUE; //Boolean: Whether or not to allow a slider comprised of a single slide
 
     return $options;
+  }
+
+  /**
+   * Return only non-empty, non-default option values.
+   *
+   * @return array
+   */
+  public function filterOptions() {
+    $options = array();
+    $defaults = $this->defineOptions();
+
+    foreach ($this->options as $key => $value) {
+      if (strpos($key, 'flexslide_') === 0) {
+        $value = $this->getFilteredOptionValue($value, $defaults[$key]['default']);
+        if (!is_null($value)) {
+          $options[substr($key, 10)] = $value;
+        }
+      }
+    }
+
+    return $options;
+  }
+
+  /**
+   * Returns an appropriately typed option value, or NULL if it matches the default.
+   *
+   * @param mixed $value
+   * @param mixed $default
+   *
+   * @return bool|float|int|null|string
+   */
+  protected function getFilteredOptionValue($value, $default) {
+    if (is_bool($default)) {
+      if ((bool) $value !== $default) {
+        return (bool) $value;
+      }
+    }
+    else if (is_int($default)) {
+      if ((int) $value !== $default) {
+        return (int) $value;
+      }
+    }
+    else if (is_float($default)) {
+      if ((float) $value !== $default) {
+        return (float) $value;
+      }
+    }
+    else if ($value !== $default) {
+      return /*string*/ $value;
+    }
+    return NULL;
   }
 
   /**

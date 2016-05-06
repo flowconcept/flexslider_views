@@ -12,9 +12,9 @@ use Drupal\image\Entity\ImageStyle;
 
 
 /**
- * Prepares variables for Views HTML list templates.
+ * Prepares variables for Views Flexslider templates.
  *
- * Default template: views-view-list.html.twig.
+ * Default template: views-view-flexslider.html.twig.
  *
  * @param array $variables
  *   An associative array containing:
@@ -48,13 +48,7 @@ function template_preprocess_views_view_flexslider(&$variables) {
   }
 
   // Flexslider configuration.
-  $variables['settings'] = array();
-  foreach ($handler->options as $option_name => $option) {
-    if (strpos($option_name, 'flexslide_') === 0 && !(is_string($option) && strlen($option) == 0)) {
-      $variables['settings'][substr($option_name, 10)] = is_numeric($option) ? (int) $option : $option;
-      unset($handler->options[$option_name]);
-    }
-  }
+  $variables['settings'] = $handler->filterOptions();
   $variables['attributes']['data-flexsliderconfig'] = Json::encode($variables['settings']);
 
   $variables['#attached']['library'][] = 'flexslider_views/flexslider_views';
