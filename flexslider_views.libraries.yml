@@ -1,10 +1,10 @@
 flexslider:
   version: 2.6.0
   js:
-    /bower_components/flexslider/jquery.flexslider-min.js: { minified: true }
+    /libraries/flexslider/jquery.flexslider-min.js: { minified: true }
   css:
     component:
-      /bower_components/flexslider/flexslider.css: {}
+      /libraries/flexslider/flexslider.css: {}
   dependencies:
     - core/jquery
 

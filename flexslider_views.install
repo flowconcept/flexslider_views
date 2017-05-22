@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Defines library requirements and install routines.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function flexslider_views_requirements($phase) {
+
+  $requirements = [];
+
+  $path = DRUPAL_ROOT . '/libraries/flexslider/dist/isotope.pkgd.min.js';
+
+  if (!file_exists($path)) {
+    $requirements['flexslider'] = array(
+      'title' => t('Flexslider library missing'),
+      'description' => t(
+        'Flexslider_views requires the flexslider library. Download https://github.com/woocommerce/FlexSlider/releases/latest and extract it to /libraries/flexslider.'
+      ),
+      'severity' => REQUIREMENT_ERROR,
+    );
+  }
+
+  return $requirements;
+}
