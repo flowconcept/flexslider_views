@@ -99,9 +99,9 @@ class FlexSlider extends StylePluginBase {
     $options['flexslide_asNavFor']['default'] = ""; //Selector: Internal property exposed for turning the slider into a thumbnail navigation for another slider
 
     // Carousel Options
-    $options['flexslide_itemWidth']['default'] = ""; //Integer: Box-model width of individual carousel items, including horizontal borders and padding.
-    $options['flexslide_itemMargin']['default'] = ""; //Integer: Margin between carousel items.
-    $options['flexslide_minItems']['default'] = 1; //Integer: Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
+    $options['flexslide_itemWidth']['default'] = 0; //Integer: Box-model width of individual carousel items, including horizontal borders and padding.
+    $options['flexslide_itemMargin']['default'] = 0; //Integer: Margin between carousel items.
+    $options['flexslide_minItems']['default'] = 0; //Integer: Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
     $options['flexslide_maxItems']['default'] = 0; //Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     $options['flexslide_move']['default'] = 0; //Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
     $options['flexslide_allowOneSlide']['default'] = TRUE; //Boolean: Whether or not to allow a slider comprised of a single slide
