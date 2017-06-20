@@ -12,7 +12,7 @@ function flexslider_views_requirements($phase) {
 
   $requirements = [];
 
-  $path = DRUPAL_ROOT . '/libraries/flexslider/dist/isotope.pkgd.min.js';
+  $path = DRUPAL_ROOT . '/libraries/flexslider/jquery.flexslider-min.js';
 
   if (!file_exists($path)) {
     $requirements['flexslider'] = array(
