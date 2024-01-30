@@ -18,5 +18,4 @@ flexslider_views:
   dependencies:
     - core/jquery
     - core/drupal
-    - core/jquery.once
     - flexslider_views/flexslider
